@@ -1,0 +1,24 @@
+servers = scan('home');
+var tempservers1 = [];
+var tempservers2 = [];
+var portsneeded = 2; //Set this to the number of ports you are able to open!!
+
+
+for (var z = 0; z < servers.length; z++) {
+	var tempservers1 = scan(servers[z]);
+
+	for (var x = 0; x < tempservers1.length; x++) {
+
+		if (getServerNumPortsRequired(tempservers1[x]) < portsneeded + 1) {
+
+			if (getServerMaxRam(tempservers1[x]) > 2){
+
+				if (servers.includes(tempservers1[x]) == false) {
+					servers.push(tempservers1[x])
+				}
+			}
+		}
+	}
+}
+
+print(servers)
