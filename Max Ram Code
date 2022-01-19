@@ -1,0 +1,26 @@
+var target = "n00dles";
+var max_ram = getServerMaxRam("foodnstuff");
+var ram_needed = getScriptRam("hacking.script");
+var num_threads = -1;
+
+//while (ram_needed < max_ram) {
+//	ram_needed = getScriptRam("hacking.script") * num_threads
+//	++num_threads;
+//}
+
+print("This server has ", max_ram, "Gb")
+
+for (var i = 0; i * ram_needed < max_ram; ++i) {
+	++num_threads
+
+}
+
+if (fileExists("BruteSSH.exe", "home")) {
+	brutessh(target)
+}
+
+print("The max number of threads is: ", num_threads)
+print("running hacking.script on ", num_threads, " threads")
+print(num_threads * ram_needed, " out of ", max_ram, " gigabytes of ram used")
+sleep(5000)
+exec("hacking.script", "foodnstuff",  num_threads) 
