@@ -1,25 +1,36 @@
-servers = ["neo-net", "nectar-net", "n00dles", "foodnstuff", "hong-fang-tea", "iron-gym", "joesguns", "iron-gym", "sigma-cosmetics","zer0"];
+servers = ["max-hardware", "neo-net", "nectar-net", "n00dles", "foodnstuff", "hong-fang-tea", "iron-gym", "joesguns", "iron-gym", "sigma-cosmetics", "zer0", "CSEC"];
 var a = 0;
 for (var a = 0; a < servers.length; a++) {
 
-	var max_ram = getServerMaxRam(servers[a]);
-	var ram_needed = getScriptRam('hacking.script');
-	var num_threads = -1;
-	var i = 0;
-	print("Server ", servers[a], " has ", max_ram, " gigabytes of ram")
+	if ((isRunning('hacking.script'), servers[a]) == false) {
 
-	if (fileExists("BruteSSH.exe", "home")) {
+		var max_ram = getServerMaxRam(servers[a]);
+		var ram_needed = getScriptRam('hacking.script');
+		var num_threads = -1;
+		var i = 0;
+		var ports = getServerNumPortsRequired(servers[a]);
+		print("Server ", servers[a], " has ", max_ram, " gigabytes of ram")
+
+		if (ports == 0) {
+			nuke(servers[a])
+		}
+
+		if (ports == 1) {
 			brutessh(servers[a])
 			nuke(servers[a])
-	}
+		}
 
-	for (var i = 0; i * ram_needed < max_ram; ++i) {
-		++num_threads
+		for (var i = 0; i * ram_needed < max_ram; ++i) {
+			++num_threads
 
+		}
+		scp('hacking.script', servers[a])
+		print("The max number of threads is: ", num_threads)
+		print("running hacking.script on ", num_threads, " threads")
+		print(num_threads * ram_needed, " out of ", max_ram, " gigabytes of ram used")
+		exec("hacking.script", servers[a], num_threads)
 	}
-	scp('hacking.script', servers[a])
-	print("The max number of threads is: ", num_threads)
-	print("running hacking.script on ", num_threads, " threads")
-	print(num_threads * ram_needed, " out of ", max_ram, " gigabytes of ram used")
-	exec("hacking.script", servers[a], num_threads)
+	else {
+		print(servers[a], " is already running hacking.script")
+	}
 }
