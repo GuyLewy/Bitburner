@@ -2,16 +2,17 @@ servers = ["max-hardware", "neo-net", "nectar-net", "n00dles", "foodnstuff", "ho
 
 
 serversprint = [];
+var a = 0;
+var hackscript = 'hacking.script';
 
-var copyscript = prompt("Do you want to reupload hacking.script?: ")
-
-
+var copyscript = prompt("Do you want to reupload your hack script?: ")
+print(copyscript)
 for (var a = 0; a < servers.length; a++) {
 
-	//if ((scriptRunning('hacking.script'), servers[a]) == false) {
+	//if ((scriptRunning('hackscript'), servers[a]) == false) {
 
 	var max_ram = getServerMaxRam(servers[a]);
-	var ram_needed = getScriptRam('hacking.script');
+	var ram_needed = getScriptRam(hackscript);
 	var num_threads = -1;
 	var i = 0;
 	var ports = getServerNumPortsRequired(servers[a]);
@@ -28,11 +29,11 @@ for (var a = 0; a < servers.length; a++) {
 			nuke(servers[a])
 		}
 
-		if (ports == 2) {
-			ftpcrack(servers[a])
-			brutessh(servers[a])
-			nuke(servers[a])
-		}
+		//if (ports == 2) {
+			//ftpcrack(servers[a])
+			//brutessh(servers[a])
+			//nuke(servers[a])
+		//}
 
 		//if (ports == 3) {
 			//ftpcrack(servers[a])
@@ -55,14 +56,14 @@ for (var a = 0; a < servers.length; a++) {
 	}
 
 	if (copyscript == true) {
-		kill('hacking.script', servers[a])
-		scp('hacking.script', servers[a])
-		exec("hacking.script", servers[a], num_threads)
+		kill(hackscript, servers[a])
+		scp(hackscript, servers[a])
+		exec(hackscript, servers[a], num_threads)
 	}
 
-	if (scriptRunning('hacking.script', servers[a]) == false){
-		scp('hacking.script', servers[a])
-		exec("hacking.script", servers[a], num_threads)
+	if (scriptRunning(hackscript, servers[a]) == false){
+		scp(hackscript, servers[a])
+		exec(hackscript, servers[a], num_threads)
 	}
 
 	serversprint.push("Running hacking.script on ", servers[a], " using ", num_threads, " threads. Using ", num_threads * ram_needed, " out of ", max_ram, " Gigabytes!")
@@ -71,6 +72,14 @@ for (var a = 0; a < servers.length; a++) {
 	//print(num_threads * ram_needed, " out of ", max_ram, " gigabytes of ram used")
 	
 
+}
+
+print("FINAL REPORT:")
+for (var b = 0; b < serversprint.length; b = b + 9) {
+	print(serversprint[b], serversprint[b + 1], serversprint[b + 2], serversprint[b + 3], serversprint[b + 4], serversprint[b + 5], serversprint[b + 6], serversprint[b + 7], serversprint[b + 8])
+	print("-------------------------------")
+	print("-------------------------------")
+}
 }
 
 print("FINAL REPORT:")
